@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Walk-on-Spheres: each circle is the largest empty circle touching the boundary (top-right arc);
+       the walk jumps from center to circle edge until it reaches the boundary. -->
+  <defs><clipPath id="r"><rect width="64" height="64" rx="14"/></clipPath></defs>
+  <g clip-path="url(#r)">
+    <rect width="64" height="64" fill="#8c1515"/>
+    <circle cx="64" cy="0" r="40" fill="#fff" fill-opacity=".16"/>
+    <circle cx="64" cy="0" r="40" fill="none" stroke="#fff" stroke-width="3" stroke-opacity=".7"/>
+    <circle cx="22" cy="42" r="19.4" fill="none" stroke="#fff" stroke-width="3.2"/>
+    <circle cx="41.2" cy="44.5" r="10" fill="none" stroke="#fff" stroke-width="2.8"/>
+    <path d="M22 42 L41.2 44.5 L50.9 41.9 L52.1 38.2" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="22" cy="42" r="4.2" fill="#fff"/>
+    <circle cx="52.1" cy="38.2" r="3.6" fill="#fff"/>
+  </g>
+</svg>

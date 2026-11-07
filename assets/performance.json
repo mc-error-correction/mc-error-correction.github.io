@@ -1,0 +1,56 @@
+{
+  "families": [
+    "Laplace",
+    "Poisson",
+    "Yukawa"
+  ],
+  "n": 2955,
+  "metric": "Mean PSNR (dB)",
+  "excluded_ids": [
+    "300935"
+  ],
+  "methods": [
+    {
+      "method": "Walk-on-Spheres",
+      "note": "8 walks per point",
+      "psnr": 16.819736777427813,
+      "n": 2955
+    },
+    {
+      "method": "CoCoGen",
+      "note": "8-walk input + diffusion",
+      "psnr": 30.068625050375307,
+      "n": 2955
+    },
+    {
+      "method": "DiffusionPDE",
+      "note": "8-walk input + diffusion",
+      "psnr": 30.427501831382106,
+      "n": 2955
+    },
+    {
+      "method": "FNO corrector",
+      "note": "8-walk input + correction",
+      "psnr": 33.268186726086576,
+      "n": 2955
+    },
+    {
+      "method": "Matched U-Net",
+      "note": "8-walk input + correction",
+      "psnr": 40.81068907735736,
+      "n": 2955
+    },
+    {
+      "method": "Walk-on-Spheres \u00b7 16k",
+      "note": "16,384 walks per point",
+      "psnr": 45.384115178947894,
+      "n": 2955
+    },
+    {
+      "method": "MC\u00b2",
+      "note": "8 walks per point + corrector",
+      "psnr": 49.55222243000592,
+      "n": 2955
+    }
+  ]
+}
