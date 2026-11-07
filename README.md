@@ -2,7 +2,7 @@
 
 Website for **MC²: Monte Carlo Correction for Fast Elliptic PDE Solving**.
 
-Published at https://mc-error-correction.github.io/mc-error-correction/ using GitHub Pages.
+Published at https://mc-error-correction.github.io/ using GitHub Pages.
 
 This is a static site. To preview locally:
 
