@@ -50,11 +50,28 @@ const COLORS = { ours: '#8c1515', frame: '#c98a8a', wos: '#5f7182', base: '#8d93
 
 const LEG = [[COLORS.ours, 'MC²'], [COLORS.frame, 'Our framework, standard backbones'], [COLORS.base, 'Prior work'], [COLORS.wos, 'Walk-on-Spheres']];
 
+// Mean PSNR (dB) per family: [family, cases, DiffusionPDE, CoCoGen, WoS 16,384 walks, MC²] (paper's per-family table).
+const FAMILIES = [
+  ['Laplace', 1000, 34.40, 33.31, 58.30, 59.94],
+  ['Poisson', 996, 27.12, 27.11, 35.86, 42.17],
+  ['Yukawa', 960, 29.70, 29.76, 41.81, 46.40],
+  ['All three', 2956, 30.42, 30.07, 45.38, 49.55],
+];
+
 const VIEWS = {
-  scatter:  { title: 'Error vs. time per problem', sub: 'Mean MSE against the analytic solution, as in the paper’s Fig. 4(c). Down and to the left is better. Both axes logarithmic.' },
-  accuracy: { title: 'Accuracy', sub: 'Mean PSNR (dB) against the analytic solution, as in the paper’s Table 1. Higher is better.' },
-  time:     { title: 'Inference time per problem', sub: 'Mean wall-clock from the evaluation run, including the 8-walk WoS input where used. Lower is better.' },
+  scatter:  { sub: 'Mean MSE against the analytic solution (paper Fig. 4c). Down and left is better; both axes log.',
+              take: '<b>MC² is more accurate than every baseline, including raw Walk-on-Spheres given 16,384 walks per point.</b> The correction adds less than 0.1\u00a0s to the 8-walk WoS estimate it starts from.' },
+  accuracy: { sub: 'Mean PSNR (dB) against the analytic solution, as in the paper’s Table 1. Higher is better.',
+              take: '<b>MC² is the most accurate method at 44.90 dB</b>, about 3 dB above raw Walk-on-Spheres with 16,384 walks. On the three families the diffusion baselines cover, MC² reaches 49.55 dB against their 30 dB.' },
+  time:     { sub: 'Mean wall-clock from the evaluation run, including the 8-walk WoS input where used. Lower is better.',
+              take: '<b>MC² takes 1.75 s per problem</b>, and 1.69 s of that is the 8-walk WoS input. Diffusion baselines take 12.9 s; raw Walk-on-Spheres at 16,384 walks takes 91.9 s.' },
+  family:   { sub: 'Mean PSNR (dB) against the analytic solution. Higher is better.',
+              take: '<b>MC² leads in every family.</b> Across all five families (adding biharmonic and Helmholtz), it lifts its 8-walk input from 15.26 dB to 44.90 dB; raw Walk-on-Spheres needs 32,768 walks (4,096× more) to reach 44.98 dB.' },
 };
+// Bar and dot rows: diffusion baselines carry the same * as on the scatter; the long note stays in the tooltip.
+const STARRED = new Set(['coco', 'dpde']);
+const rowName = d => d.name + (STARRED.has(d.key) ? '*' : '');
+const rowNote = d => d.note.replace(/ \(.*\)$/, '');
 
 const chartEl = document.querySelector('#perf-chart');
 const legendEl = document.querySelector('#perf-legend');
@@ -99,6 +116,7 @@ function bindTip(node, html) {
 }
 
 function legend(items) {
+  legendEl.hidden = false;
   legendEl.innerHTML = items.map(([c, label, shape]) =>
     `<span><i class="lg ${shape || 'dot'}" style="background:${c}"></i>${label}</span>`).join('');
 }
@@ -222,7 +240,7 @@ function drawScatter() {
 function drawAccuracy() {
   const rows = METHODS.map(d => {
     const cls = d.kind === 'ours' ? 'ours' : d.kind === 'frame' ? 'frame' : d.key === 'wos16' ? 'high-mc' : d.key === 'wos8' ? 'wos-lo' : '';
-    return `<div class="bar-row ${cls}" data-key="${d.key}"><span class="bl">${d.name}<small>${d.note}</small></span>` +
+    return `<div class="bar-row ${cls}" data-key="${d.key}"><span class="bl">${rowName(d)}<small>${rowNote(d)}</small></span>` +
       `<div class="track"><div style="width:${(d.psnr / 60 * 100).toFixed(2)}%"></div></div><b>${d.psnr.toFixed(2)}</b></div>`;
   }).join('');
   chartEl.innerHTML = `<div class="vbars" role="img" aria-label="Mean PSNR in dB for eight methods; values are listed beside each bar.">${rows}` +
@@ -238,7 +256,7 @@ function drawTime() {
   const sorted = [...METHODS].sort((a, b) => a.t - b.t);
   const rows = sorted.map(d => {
     const cls = d.kind;
-    return `<div class="dot-row ${cls}" data-key="${d.key}"><span class="bl">${d.name}<small>${d.note}</small></span>` +
+    return `<div class="dot-row ${cls}" data-key="${d.key}"><span class="bl">${rowName(d)}<small>${rowNote(d)}</small></span>` +
       `<div class="dot-track"><i class="stem" style="width:${pos(d.t)}%"></i><i class="dot" style="left:${pos(d.t)}%"></i></div>` +
       `<b>${fmtT(d.t)}</b></div>`;
   }).join('');
@@ -249,12 +267,23 @@ function drawTime() {
   legend(LEG);
 }
 
+// ---- View 4: accuracy by PDE family (table) ----
+function drawFamily() {
+  const rows = FAMILIES.map(([name, n, dpde, coco, wos, mc2], i) =>
+    `<tr${i === FAMILIES.length - 1 ? ' class="pooled"' : ''}><th scope="row">${name}</th><td>${fmtB(n)}</td>` +
+    `<td>${dpde.toFixed(2)}</td><td>${coco.toFixed(2)}</td><td>${wos.toFixed(2)}</td><td class="win">${mc2.toFixed(2)}</td></tr>`).join('');
+  chartEl.innerHTML = '<div class="table-scroll" tabindex="0" role="region" aria-label="Mean PSNR by PDE family"><table>' +
+    '<thead><tr><th scope="col">Family</th><th scope="col">Cases</th><th scope="col">Diffusion\u00adPDE</th><th scope="col">CoCoGen</th>' +
+    `<th scope="col">WoS 16,384 walks</th><th scope="col">MC²</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  legendEl.hidden = true;
+}
+
 function render() {
   hideTip();
-  document.querySelector('#perf-title').textContent = VIEWS[view].title;
   document.querySelector('#perf-sub').textContent = VIEWS[view].sub;
   chartEl.dataset.view = view;
-  ({ scatter: drawScatter, accuracy: drawAccuracy, time: drawTime })[view]();
+  document.querySelector('#perf-take').innerHTML = VIEWS[view].take;
+  ({ scatter: drawScatter, accuracy: drawAccuracy, time: drawTime, family: drawFamily })[view]();
 }
 
 // Tabs (click + arrow keys)
@@ -276,3 +305,17 @@ select(tabs.find(t => t.dataset.view === view));
 
 let rt;
 new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (view === 'scatter') drawScatter(); }, 80); }).observe(chartEl);
+
+// ---------- Top nav: mark the section currently in view ----------
+const navLinks = [...document.querySelectorAll('.topnav-links a')];
+const spy = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    navLinks.forEach(a => {
+      const on = a.getAttribute('href') === `#${e.target.id}`;
+      a.classList.toggle('active', on);
+      on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+    });
+  }
+}, { rootMargin: '-45% 0px -50% 0px' });
+navLinks.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) spy.observe(t); });

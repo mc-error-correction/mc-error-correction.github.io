@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -23,6 +24,7 @@
       <a href="#dataset">PDEZoo</a>
       <a href="#citation">Cite</a>
     </div>
+    <a class="nav-paper" href="https://arxiv.org/abs/2605.09288" target="_blank" rel="noopener">Paper</a>
   </div>
 </nav>
 
@@ -32,56 +34,45 @@
 <header class="hero" id="top">
   <div class="venue">NeurIPS 2026</div>
   <h1><span class="title-mark">MC<sup>2</sup>:</span> Monte Carlo Correction<br class="desk"> for Fast Elliptic PDE Solving</h1>
+  <p class="tldr">We show that the noise in a cheap Monte Carlo PDE solution is structured enough for a neural network to remove. The resulting solver, MC², is <b>about 218× faster</b> than Walk-on-Spheres at the same accuracy, and we release PDEZoo, a benchmark of 2 million PDEs with exact solutions.</p>
 
   <div class="authors">
     <span>Ethan Hsu<sup>1,*,†</sup></span>
     <span>Ivan Ge<sup>1,*</sup></span>
     <span>Hong Meng Yam<sup>1,2,*</sup></span>
   </div>
-  <div class="affiliations"><span><sup>1</sup> Stanford University</span><span><sup>2</sup> Pinetree Research</span></div>
-  <p class="author-note"><span><sup>*</sup> Equal contribution</span><span><sup>†</sup> Corresponding: <a href="mailto:contact@ethanhsu.net">contact@ethanhsu.net</a> · <a href="mailto:ethanhsu@stanford.edu">ethanhsu@stanford.edu</a></span></p>
+  <div class="affiliations"><span><sup>1</sup> Stanford University</span><span><sup>2</sup> Pinetree Research</span><span><sup>*</sup> Equal contribution</span><span><sup>†</sup> <a href="mailto:ethanhsu@stanford.edu">Corresponding author</a></span></div>
 
   <div class="resources" aria-label="Project resources">
-    <span class="resource primary">Paper <small>Forthcoming</small></span>
-    <span class="resource">Code <small>Forthcoming</small></span>
-    <a class="resource" href="https://huggingface.co/datasets/ethanhibiscus/PDEZoo">PDEZoo <small>Hugging Face</small></a>
+    <a class="btn primary" href="https://arxiv.org/abs/2605.09288" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Paper <small>arXiv</small></a>
+    <a class="btn" href="https://huggingface.co/datasets/ethanhibiscus/PDEZoo/viewer?row=4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>PDEZoo <small>Hugging Face</small></a>
+    <span class="btn disabled" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Code <small>Coming soon</small></span>
   </div>
 
-  <p class="tldr"><strong>TL;DR</strong> Run a few random walks, then remove their noise with one neural network pass. MC² matches Walk-on-Spheres run with <b>over 1,000× more samples</b>, about <b>218× faster</b>, and it holds up on PDE types it never saw in training.</p>
+  <figure class="teaser">
+    <a href="assets/gyroid.png" target="_blank" rel="noopener" aria-label="Open full-resolution 3D comparison"><img src="assets/gyroid.png" width="2800" height="1800" alt="Interior and exterior views of a gyroid compare a noisy Walk-on-Spheres estimate with 32 walks per point, the smooth MC² result from 8 walks plus correction, and the analytic ground truth. All panels share a linear color scale." fetchpriority="high"></a>
+    <figcaption>MC² (middle) starts from 8 walks per point and finishes in 5.6 s, with <b>~550× lower</b> interior-slice error than Walk-on-Spheres with 32 walks (left, 14.2 s). <span>3D Helmholtz on a gyroid; one selected example, errors against the analytic solution.</span></figcaption>
+  </figure>
+
+  <div class="keystats" aria-label="Key results">
+    <div class="kstat"><strong>~218×</strong><span>faster than Walk-on-Spheres at matched accuracy</span></div>
+    <div class="kstat"><strong>~170×</strong><span>faster than diffusion baselines while achieving higher accuracy</span></div>
+    <div class="kstat"><strong>#1</strong><span>learned method on PDE families never seen in training</span></div>
+    <div class="kstat"><strong>2M</strong><span>PDEs in PDEZoo, each with an analytic ground truth</span></div>
+  </div>
 </header>
 
-<!-- ============ KEY NUMBERS ============ -->
-<section class="keystats" aria-label="Key results">
-  <div class="kstat"><strong>~218×</strong><span>faster than Walk-on-Spheres at matched accuracy</span></div>
-  <div class="kstat"><strong>~170×</strong><span>faster than diffusion baselines while achieving higher accuracy</span></div>
-  <div class="kstat"><strong>#1</strong><span>learned method on PDE families never seen in training</span></div>
-  <div class="kstat"><strong>2M</strong><span>PDEs in PDEZoo, each with an analytic ground truth</span></div>
-</section>
-
-<!-- ============ TEASER ============ -->
-<figure class="teaser">
-  <div class="fig-tag">3D · Helmholtz equation · gyroid domain</div>
-  <a href="assets/gyroid.png" target="_blank" rel="noopener" aria-label="Open full-resolution 3D comparison"><img src="assets/gyroid.png" width="2800" height="1800" alt="Interior and exterior views of a gyroid compare a noisy Walk-on-Spheres estimate with 32 walks per point, the smooth MC² result from 8 walks plus correction, and the analytic ground truth. All panels share a linear color scale." fetchpriority="high"></a>
-  <figcaption>
-    <p><strong>Less sampling, less noise, less time.</strong> MC² (middle) starts from just 8 walks per point and finishes in 5.6 s. Its interior-slice error is <b>~550× lower</b> than Walk-on-Spheres with 32 walks (left, 14.2 s).</p>
-    <p class="fine">Top row: interior slice. Bottom row: exterior surface. Right column: analytic solution. All panels share one color scale. One selected example; MSE is measured against the analytic solution.</p>
-  </figcaption>
-</figure>
-
 <!-- ============ ABSTRACT ============ -->
-<section id="abstract" class="section">
-  <div class="section-label">Abstract</div>
-  <div class="prose abstract">
-    <p>Partial differential equation (PDE) solvers underpin reconstruction, simulation, and physical modeling across computer graphics, geometry processing, and scientific computing. Classical Monte Carlo PDE solvers such as Walk-on-Spheres (WoS) provide mesh-free estimations that are unbiased, but with accuracy limited by sampling and numerical approximation. Learned solvers are fast but biased and brittle under distribution shift. We therefore present <strong>MC²</strong>, a hybrid WoS-Neural Network (WoS-NN) PDE solver that treats a low-budget Monte Carlo solution as a structured estimator of the true field and learns a single-pass neural correction to recover a high-fidelity solution. MC² matches the accuracy of solutions using over 1000× more Monte Carlo samples, outperforming all evaluated mesh-free classical, denoising, and neural-operator baselines. To enable reproducible study of finite-compute PDE solving, we additionally release <strong>PDEZoo</strong>, the largest standardized elliptic PDE benchmark to date: 2 million PDEs spanning 5 elliptic families and unlimited geometric compositions, with analytic ground truth and multi-budget Monte Carlo trajectories. Together <strong>MC²</strong> and <strong>PDEZoo</strong> (1) empirically establish that finite-sample Monte Carlo error is structured, learnable, and correctable in a single forward pass, (2) show that we can solve PDEs ~<strong>218×</strong> faster than WoS at matched accuracy, and ~<strong>170×</strong> faster than state-of-the-art diffusion methods while achieving higher accuracy, and (3) provide the reproducible evaluation infrastructure the field has so far lacked.</p>
-  </div>
+<section id="abstract" class="section band abstract" aria-labelledby="abstract-label">
+  <h2 class="section-label" id="abstract-label">Abstract</h2>
+  <p>Partial differential equation (PDE) solvers underpin reconstruction, simulation, and physical modeling across computer graphics, geometry processing, and scientific computing. Classical Monte Carlo PDE solvers such as Walk-on-Spheres (WoS) provide mesh-free estimations that are unbiased, but with accuracy limited by sampling and numerical approximation. Learned solvers are fast but biased and brittle under distribution shift. We therefore present <strong>MC²</strong>, a hybrid WoS-Neural Network (WoS-NN) PDE solver that treats a low-budget Monte Carlo solution as a structured estimator of the true field and learns a single-pass neural correction to recover a high-fidelity solution. MC² matches the accuracy of solutions using over 1000× more Monte Carlo samples, outperforming all evaluated mesh-free classical, denoising, and neural-operator baselines. To enable reproducible study of finite-compute PDE solving, we additionally release <strong>PDEZoo</strong>, the largest standardized elliptic PDE benchmark to date: 2 million PDEs spanning 5 elliptic families and unlimited geometric compositions, with analytic ground truth and multi-budget Monte Carlo trajectories. Together <strong>MC²</strong> and <strong>PDEZoo</strong> (1) empirically establish that finite-sample Monte Carlo error is structured, learnable, and correctable in a single forward pass, (2) show that we can solve PDEs ~<strong>218×</strong> faster than WoS at matched accuracy, and ~<strong>170×</strong> faster than state-of-the-art diffusion methods while achieving higher accuracy, and (3) provide the reproducible evaluation infrastructure the field has so far lacked.</p>
 </section>
 
 <!-- ============ METHOD ============ -->
 <section id="method" class="section">
-  <div class="section-label">01 · Method</div>
-  <h2>Sample a little, then correct in one pass</h2>
-  <p class="lead">We introduce a hybrid framework: run Walk-on-Spheres with a tiny budget, then correct its error with a neural network in one forward pass. The 8-walk estimate is noisy, but the noise is structured, so a network can learn to remove it.</p>
-  <div class="claim"><b>Our contribution</b> is this WoS + learned-corrector framework. MC² runs it with the MC² corrector, our network adapted from SUNet for PDE inputs and 3D. With standard FNO or U-Net backbones instead, the framework still beats prior diffusion methods.</div>
+  <div class="section-label">Method</div>
+  <h2>A few random walks produce a noisy solution, and a neural network corrects the error</h2>
+  <p class="lead">An estimate from just 8 walks per point is noisy, but the noise is structured, so a network can learn to remove it.</p>
 
   <ol class="pipeline" aria-label="Method pipeline">
     <li>
@@ -103,104 +94,83 @@
     </li>
   </ol>
 
-  <ul class="facts">
-    <li><b>Backbone-agnostic:</b> also works with standard U-Net or FNO backbones.</li>
-    <li><b>Trained once</b> across many PDEs: no retraining for each new problem.</li>
-    <li><b>Deterministic:</b> a single forward pass, not iterative sampling.</li>
-    <li><b>Works in 2D and 3D</b>, including analytic, real-world, and implicit geometries.</li>
-  </ul>
-  <p class="fine">Terminology: <em>MC²</em> is the full solver (8-walk WoS + correction). <em>MC² corrector</em> is only the neural network. The correction can introduce bias, so every result is checked against analytic solutions.</p>
+  <div class="claim"><b>Our contribution</b> is this WoS + learned-corrector framework. MC² runs it with the MC² corrector, our network adapted from SUNet for PDE inputs and 3D. With standard FNO or U-Net backbones instead, the framework still beats prior diffusion methods.</div>
+  <p class="fine">The correction can introduce bias, so every result is checked against analytic solutions.</p>
 </section>
 
 <!-- ============ PERFORMANCE ============ -->
-<section id="performance" class="section">
-  <div class="section-label">02 · Performance</div>
-  <h2>Top accuracy for the cost of 8 random walks</h2>
-  <p class="lead">Every learned method below starts from the same 8-walk WoS estimate. MC² adds less than 0.1 s on top of it and is more accurate than every baseline, including raw WoS given 16,384 walks per point.</p>
+<section id="performance" class="section band">
+  <div class="section-label">Performance</div>
+  <h2>Over 100× faster than any other mesh‑free method at the same accuracy</h2>
+  <p class="lead">MC² runs in 1.75 s per problem. Raw Walk-on-Spheres needs between 16,384 and 32,768 walks per point, which takes 92 to 183 s, to reach the same error, and no learned baseline reaches it. Every corrector and diffusion baseline below starts from the same 8-walk WoS estimate as MC².</p>
 
   <div class="card perf-card">
     <div class="perf-top">
       <div class="tabs" role="tablist" aria-label="Choose a chart">
         <button role="tab" id="tab-scatter" aria-controls="perf-panel" aria-selected="true" data-view="scatter">Error vs. time</button>
         <button role="tab" id="tab-accuracy" aria-controls="perf-panel" aria-selected="false" tabindex="-1" data-view="accuracy">Accuracy</button>
-        <button role="tab" id="tab-time" aria-controls="perf-panel" aria-selected="false" tabindex="-1" data-view="time">Inference time</button>
+        <button role="tab" id="tab-time" aria-controls="perf-panel" aria-selected="false" tabindex="-1" data-view="time"><span class="wide">Inference time</span><span class="narrow">Time</span></button>
+        <button role="tab" id="tab-family" aria-controls="perf-panel" aria-selected="false" tabindex="-1" data-view="family">By family</button>
       </div>
-      <span class="card-sub">Full PDEZoo test set, as in the paper · NVIDIA A100</span>
     </div>
     <div id="perf-panel" role="tabpanel" aria-labelledby="tab-scatter">
-      <div class="perf-head"><h3 id="perf-title">Error vs. time per problem</h3><p id="perf-sub">Mean MSE against the analytic solution, as in the paper’s Fig. 4(c). Down and to the left is better. Both axes logarithmic.</p></div>
+      <div class="perf-head"><p><span id="perf-sub">Mean MSE against the analytic solution (paper Fig. 4c). Down and left is better; both axes log.</span> Full PDEZoo test set, one NVIDIA A100.</p></div>
       <div id="perf-chart" class="perf-chart"></div>
       <div id="perf-legend" class="perf-legend"></div>
+      <p class="card-note" id="perf-take"></p>
     </div>
     <noscript>
       <div class="table-scroll"><table><caption>Mean time per problem and mean PSNR</caption>
         <thead><tr><th>Method</th><th>Time</th><th>PSNR (dB)</th></tr></thead>
         <tbody><tr><th>FNO (neural operator)</th><td>0.02 s</td><td>7.74</td></tr><tr><th>WoS, 8 walks</th><td>1.69 s</td><td>15.26</td></tr><tr><th>CoCoGen*</th><td>12.9 s</td><td>30.07</td></tr><tr><th>DiffusionPDE*</th><td>12.9 s</td><td>30.42</td></tr><tr><th>Our framework, FNO backbone</th><td>1.71 s</td><td>31.00</td></tr><tr><th>Our framework, U-Net backbone</th><td>1.76 s</td><td>37.32</td></tr><tr><th>WoS, 16,384 walks</th><td>91.9 s</td><td>42.14</td></tr><tr><th>MC²</th><td>1.75 s</td><td>44.90</td></tr></tbody></table></div>
+      <div class="table-scroll"><table><caption>Mean PSNR (dB) by PDE family</caption>
+        <thead><tr><th>Family</th><th>Cases</th><th>DiffusionPDE</th><th>CoCoGen</th><th>WoS 16k</th><th>MC²</th></tr></thead>
+        <tbody><tr><th>Laplace</th><td>1,000</td><td>34.40</td><td>33.31</td><td>58.30</td><td>59.94</td></tr><tr><th>Poisson</th><td>996</td><td>27.12</td><td>27.11</td><td>35.86</td><td>42.17</td></tr><tr><th>Yukawa</th><td>960</td><td>29.70</td><td>29.76</td><td>41.81</td><td>46.40</td></tr><tr><th>All three</th><td>2,956</td><td>30.42</td><td>30.07</td><td>45.38</td><td>49.55</td></tr></tbody></table></div>
+      <p class="card-note">Across all five families (adding biharmonic and Helmholtz), MC² lifts its 8-walk input from 15.26 dB to 44.90 dB. Raw WoS needs 32,768 walks (4,096× more) to reach 44.98 dB.</p>
     </noscript>
-    <p class="metric-note">Values follow the paper (Table 1 and Fig. 4c): mean MSE and mean PSNR over every test problem a method covers, and mean time per problem from the evaluation run on one A100, including the 8-walk WoS input for every corrector. MSE is the paper’s normalized, clipped metric. Clipping caps the error of very noisy low-walk WoS fields, which is why the WoS curve bends at small budgets; the unclipped error falls as 1/walks. WoS at 16–256 walks runs inside one batch of 256 walks, so those budgets share nearly the same time and the curve skips them (dotted segment). *DiffusionPDE and CoCoGen have teachers only for Laplace, Poisson and Yukawa, so their points average those 2,956 problems, while every other method averages all 4,951 problems across five families. On those three families alone, WoS at about the same time (2,048 walks, 11.8 s) has a slightly lower mean error than diffusion and a 7× lower median error. Diffusion time adds 11.49 s of sampling (100 steps, batch 1). Headline ~218× and ~170× come from the paper’s compute accounting: WoS at 32,768 walks takes 200.5 s vs. 0.92 s for MC², and diffusion sampling takes 11.37 s vs. 0.067 s for the MC² corrector (medians).</p>
-  </div>
-
-  <div class="two-col spaced">
-    <div>
-      <h3 class="h3">Accuracy by PDE family</h3>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="Per-family accuracy results">
-        <table>
-          <caption>Mean PSNR (dB ↑) · Laplace, Poisson and Yukawa, as in the paper’s per-family table</caption>
-          <thead><tr><th scope="col">Family</th><th scope="col">Cases</th><th scope="col">Diffusion­PDE</th><th scope="col">CoCoGen</th><th scope="col">WoS 16k</th><th scope="col">MC²</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Laplace</th><td>1,000</td><td>34.40</td><td>33.31</td><td>58.30</td><td class="win">59.94</td></tr>
-            <tr><th scope="row">Poisson</th><td>996</td><td>27.12</td><td>27.11</td><td>35.86</td><td class="win">42.17</td></tr>
-            <tr><th scope="row">Yukawa</th><td>960</td><td>29.70</td><td>29.76</td><td>41.81</td><td class="win">46.40</td></tr>
-            <tr class="pooled"><th scope="row">All three</th><td>2,956</td><td>30.42</td><td>30.07</td><td>45.38</td><td class="win">49.55</td></tr>
-          </tbody>
-        </table>
+    <details class="more">
+      <summary>How this was measured</summary>
+      <div class="more-body">
+        <p><b>Metrics.</b> Values follow the paper (Table 1 and Fig. 4c): mean MSE and mean PSNR over every test problem a method covers, and mean time per problem from the evaluation run on one A100, including the 8-walk WoS input for every corrector. MSE is the paper’s normalized, clipped metric. Clipping caps the error of very noisy low-walk WoS fields, which is why the WoS curve bends at small budgets; the unclipped error falls as 1/walks. WoS at 16–256 walks runs inside one batch of 256 walks, so those budgets share nearly the same time and the curve skips them (dotted segment). The FNO operator sees only the source term.</p>
+        <p><b>Diffusion baselines.</b> On Laplace, Poisson and Yukawa alone, WoS at about the same time (2,048 walks, 11.8 s) has a slightly lower mean error than diffusion and a 7× lower median error. Diffusion time adds 11.49 s of sampling (100 steps, batch 1).</p>
+        <p><b>Shared inputs.</b> The FNO and U-Net correctors are our framework with a standard backbone in place of the MC² corrector (the U-Net matches its parameter count). DiffusionPDE and CoCoGen are prior methods; here they are conditioned on the same 8-walk estimate and use family-specific teachers with 100 sampling steps, so they are only evaluated on the three families they were trained on. Their values (marked *) average those 2,956 problems; every other method averages all 4,951 problems across five families.</p>
+        <p><b>Headline numbers.</b> ~218× and ~170× come from the paper’s compute accounting: WoS at 32,768 walks takes 200.5 s vs. 0.92 s for MC², and diffusion sampling takes 11.37 s vs. 0.067 s for the MC² corrector (medians).</p>
       </div>
-    </div>
-    <div class="callout">
-      <h3 class="h3">Across all five families</h3>
-      <p class="big-compare"><span>15.26 dB</span><i aria-hidden="true">→</i><span class="ours-text">44.90 dB</span></p>
-      <p>MC² lifts its 8-walk input by ~30 dB on the full test set, which also includes biharmonic and Helmholtz problems. Raw WoS needs 32,768 walks (4,096× more) to reach 44.98 dB.</p>
-    </div>
+    </details>
   </div>
 
-  <div class="notes">
-    <div>
-      <h4>Shared inputs</h4>
-      <p>The FNO and U-Net correctors are our framework with a standard backbone in place of the MC² corrector (the U-Net matches its parameter count). DiffusionPDE and CoCoGen are prior methods; here they are conditioned on that field and use family-specific teachers with 100 sampling steps, so they are only evaluated on the three families they were trained on.</p>
-    </div>
-    <div>
-      <h4>Shared evaluation</h4>
-      <p>As in the paper, each method is averaged over every test problem it covers: 4,951 problems across five families, or the 2,956 Laplace, Poisson and Yukawa problems for the diffusion baselines. The per-family table compares all methods family by family.</p>
-    </div>
-  </div>
-
-  <h3 class="h3 spaced">What the error looks like</h3>
-  <p class="lead small">Poisson equation on an ellipse. Compare each panel with the ground truth (bottom right). MC² keeps the smooth structure; the others leave noise or blur detail.</p>
-  <figure class="card figure-card">
+  <figure class="plain-figure">
+    <h3 class="h3">What the error looks like</h3>
+    <p class="card-desc">Poisson equation on an ellipse, one example selected to illustrate MC²'s advantage. MC² keeps the smooth structure of the ground truth (bottom right); the others leave noise or blur detail.</p>
     <a href="assets/comparison.png" target="_blank" rel="noopener" aria-label="Open qualitative comparison at full resolution"><img src="assets/comparison.png" width="1266" height="686" alt="Poisson ellipse comparison showing MC², FNO, DiffusionPDE, U-Net, the best traditional denoiser (NLM), Walk-on-Spheres at 8 and 512 walks, and ground truth." loading="lazy"></a>
-    <figcaption class="fine">FNO and U-Net panels are our framework with other backbones; DiffusionPDE is prior work. All receive the same 8-walk estimate. Raw WoS is shown at 8 and 512 walks. “Best Trad” is the best traditional denoiser for this case. Shared color scale. Lower rel L2 and MSE are better. This example was selected to illustrate MC²'s advantage.</figcaption>
   </figure>
 
   <div class="callout fem">
-    <h3 class="h3">Where finite elements still win</h3>
-    <p>On our easy-to-mesh 2D domains, FEM is both more accurate and faster. MC² is most useful when meshing is hard: on 3D analytic domains it offers a favorable accuracy–compute tradeoff, and it still returns an answer where the tested gmsh meshing pipeline fails. FEM remains competitive or better on successfully meshed real models and smooth blobs. Meshing failures are specific to the pipeline we tested, not to every FEM implementation.</p>
+    <h3 class="h3">How MC² compares with finite elements</h3>
+    <p>We evaluate finite element methods (FEM) separately, in 3D, with a 3D version of MC², on analytic shapes, real‑world Thingi10K models, and implicit surfaces.</p>
+    <ul>
+      <li><b>MC² returned a solution on every problem.</b> The gmsh‑based FEM pipeline we tested finished 160 of 250 problems on clean Thingi10K models, 10 of 250 on defective ones, and 116 of 200 on gyroid lattices.</li>
+      <li><b>On 3D analytic shapes, FEM takes an estimated ~5× longer to reach the same error as MC².</b> MC² reaches a median relative L² error of 0.010 in 1.8 s.</li>
+      <li><b>When meshing succeeds, FEM is usually the more accurate solver.</b> That holds on clean Thingi10K models and smooth blobs, and on PDEZoo’s 2D shapes.</li>
+    </ul>
+    <p class="why">PDEZoo is designed to measure how accurate a solver is at a fixed compute budget, and the evaluation above uses it to compare solvers that need no mesh: Walk‑on‑Spheres and learned methods. MC² corrects a Monte Carlo solver, so what that evaluation shows is how much Monte Carlo compute the correction saves. FEM needs a mesh, and the cost and reliability of building one change the comparison, which is why it is evaluated separately.</p>
   </div>
 </section>
 
 <!-- ============ GENERALIZATION ============ -->
 <section id="generalization" class="section">
-  <div class="section-label">03 · Generalization</div>
-  <h2>The only learned method that holds up on unseen PDEs</h2>
-  <p class="lead">MC² was trained only on Laplace, Poisson, and Yukawa problems. With the same weights and no retraining, it stays the most accurate learned method on PDE types, solution shapes, and resolutions it never saw.</p>
+  <div class="section-label">Generalization</div>
+  <h2>The only learned method that stays accurate on PDE families it never trained on</h2>
+  <p class="lead">MC² was trained only on Laplace, Poisson, and Yukawa problems. With the same weights and no retraining, it stays the most accurate learned method on PDE families, solution building blocks, and resolutions it never saw.</p>
 
   <div class="card gen-card">
     <div class="card-head">
-      <div><span class="card-kicker">Held-out PDE families: biharmonic + Helmholtz</span><h3>Mean PSNR on PDE types never seen in training</h3></div>
-      <span class="card-sub">Higher is better · all learned methods get the same 8-walk input</span>
+      <h3>Unseen PDE families: biharmonic + Helmholtz</h3>
+      <p class="card-sub">Mean PSNR (dB), higher is better · every corrector gets the same 8-walk input</p>
     </div>
-    <div class="gen-bars" style="--ref:62.2%" role="img" aria-label="Mean PSNR on held-out biharmonic and Helmholtz problems: WoS with 8 walks 12.96 dB; FNO neural operator 5.47 dB; diffusion baselines cannot run; our framework with an FNO backbone 27.12 dB; with a U-Net backbone 32.16 dB; WoS with 16,384 walks 37.32 dB; MC² 38.01 dB.">
-      <div class="bar-row wos-lo" title="Walk-on-Spheres, 8 walks: 12.96 dB"><span class="bl">Walk-on-Spheres<small>8 walks per point (the input)</small></span><div class="track"><div style="width:21.6%"></div></div><b>12.96</b></div>
+    <div class="gen-bars" style="--ref:62.2%" role="img" aria-label="Mean PSNR on held-out biharmonic and Helmholtz problems: FNO neural operator 5.47 dB; WoS with 8 walks 12.96 dB; diffusion baselines cannot run; our framework with an FNO backbone 27.12 dB; with a U-Net backbone 32.16 dB; WoS with 16,384 walks 37.32 dB; MC² 38.01 dB.">
       <div class="bar-row" title="FNO (neural operator, prior work): 5.47 dB"><span class="bl">FNO<small>prior work · neural operator</small></span><div class="track"><div style="width:9.1%"></div></div><b>5.47</b></div>
+      <div class="bar-row wos-lo" title="Walk-on-Spheres, 8 walks: 12.96 dB"><span class="bl">Walk-on-Spheres<small>8 walks per point (the input)</small></span><div class="track"><div style="width:21.6%"></div></div><b>12.96</b></div>
       <div class="bar-row na"><span class="bl">DiffusionPDE, CoCoGen<small>prior work · diffusion</small></span><div class="track na-track"><span class="long">Can't run: needs a separate model trained on each family</span><span class="short">Can't run on unseen families</span></div><b>—</b></div>
       <div class="bar-row frame" title="Our framework, FNO backbone: 27.12 dB"><span class="bl">FNO corrector<small>our framework · FNO backbone</small></span><div class="track"><div style="width:45.2%"></div></div><b>27.12</b></div>
       <div class="bar-row frame" title="Our framework, U-Net backbone: 32.16 dB"><span class="bl">U-Net corrector<small>our framework · U-Net backbone</small></span><div class="track"><div style="width:53.6%"></div></div><b>32.16</b></div>
@@ -208,18 +178,26 @@
       <div class="bar-row ours" title="MC²: 38.01 dB"><span class="bl">MC²<small>our framework · MC² corrector</small></span><div class="track"><div style="width:63.35%"></div></div><b>38.01</b></div>
       <div class="axis" aria-hidden="true"><span>0</span><span>20</span><span>40</span><span>60 dB</span></div>
     </div>
-    <p class="card-note">Dashed line: raw WoS with 16,384 walks per point. <b>MC² is the only learned method above it</b>, about 6 dB ahead of the next-best learned method. Per family, MC² reaches 35.96 dB on biharmonic and 40.05 dB on Helmholtz.</p>
+    <p class="card-note"><b>MC² is the only learned method above raw WoS with 16,384 walks</b> (dashed line), about 6 dB ahead of the next-best learned method.</p>
+    <details class="more">
+      <summary>Per-family results and caveats</summary>
+      <div class="more-body">
+        <p>Per family, MC² reaches 35.96 dB on biharmonic and 40.05 dB on Helmholtz.</p>
+        <p>Diffusion baselines need one teacher model per PDE family, so they have no model for biharmonic or Helmholtz.</p>
+        <p>The held-out families share some analytic solution components with the training data. The building-block test below removes that overlap.</p>
+      </div>
+    </details>
   </div>
 
   <div class="gen-grid">
     <div class="card">
       <div class="card-head">
-        <div><span class="card-kicker">Unseen solution building blocks</span><h3>42.3 dB</h3></div>
-        <span class="card-sub">Median PSNR · 500 problems</span>
+        <h3>Unseen solution building blocks</h3>
+        <p class="card-sub">Median PSNR (dB), higher is better · 500 problems</p>
       </div>
       <div class="mini-bars" role="img" aria-label="Median PSNR on 500 problems built from solution components excluded from training: FNO neural operator 7.27 dB, 8-walk input 14.92 dB, NLM denoiser 26.70, U-Net corrector 35.46, MC² 42.32.">
         <div class="mini"><span>FNO operator</span><div class="track"><div style="width:12.1%"></div></div><b>7.27</b></div>
-        <div class="mini"><span>8-walk input</span><div class="track"><div style="width:24.9%"></div></div><b>14.92</b></div>
+        <div class="mini wos-lo"><span>8-walk input</span><div class="track"><div style="width:24.9%"></div></div><b>14.92</b></div>
         <div class="mini"><span>NLM denoiser</span><div class="track"><div style="width:44.5%"></div></div><b>26.70</b></div>
         <div class="mini frame"><span>U-Net corrector</span><div class="track"><div style="width:59.1%"></div></div><b>35.46</b></div>
         <div class="mini ours"><span>MC²</span><div class="track"><div style="width:70.5%"></div></div><b>42.32</b></div>
@@ -228,8 +206,8 @@
     </div>
     <div class="card">
       <div class="card-head">
-        <div><span class="card-kicker">Unseen resolution</span><h3>256² → 1024²</h3></div>
-        <span class="card-sub">Median relative L² error · 510 problems</span>
+        <h3>Unseen resolution: 256² → 1024²</h3>
+        <p class="card-sub">Median relative L² error, lower is better · 510 problems</p>
       </div>
       <div class="res-compare">
         <div><strong>1.09</strong><span>8-walk input at 1024²</span></div>
@@ -239,45 +217,43 @@
       <p class="card-note">Trained at 256 × 256, MC² runs on 1024 × 1024 grids by tiling, without retraining. Error is even slightly lower than at its training resolution (0.019).</p>
     </div>
   </div>
-  <p class="fine">The held-out families share some analytic solution components with the training data. The building-block test removes that overlap. Diffusion baselines need one teacher model per PDE family, so they have no model for biharmonic or Helmholtz.</p>
 </section>
 
 <!-- ============ DATASET ============ -->
-<section id="dataset" class="section">
-  <div class="section-label">04 · Benchmark</div>
-  <h2>PDEZoo: a benchmark with exact answers</h2>
+<section id="dataset" class="section band">
+  <div class="section-label">Benchmark</div>
+  <h2>PDEZoo provides 2 million PDEs with exact solutions and intermediate Monte Carlo solutions</h2>
   <p class="lead">Every problem comes with its geometry, source term, and boundary conditions, plus an analytic solution to grade against. Saved WoS estimates at several sample budgets show how accuracy grows with compute.</p>
 
-  <div class="ds-grid">
-    <div class="ds-item"><strong>2M</strong><span>PDE problems</span></div>
-    <div class="ds-item"><strong>5</strong><span>elliptic families</span></div>
-    <div class="ds-item"><strong>Exact</strong><span>analytic ground truth</span></div>
-    <div class="ds-item"><strong>Multi-budget</strong><span>Monte Carlo estimates</span></div>
-  </div>
   <div class="tags" aria-label="PDE families"><span>Laplace</span><span>Poisson</span><span>Yukawa</span><span>Biharmonic</span><span>Helmholtz</span></div>
   <p class="fine">Shapes are built by composing primitives (unions, intersections, differences). The evaluation benchmark covers all five families. The large training pool covers Laplace, Poisson, and Yukawa.</p>
 
-  <figure class="card figure-card">
+  <figure class="plain-figure">
     <a href="assets/dataset.png" target="_blank" rel="noopener" aria-label="Open dataset overview at full resolution"><img src="assets/dataset.png" width="2048" height="548" alt="Radar plots summarize geometry construction, PDE families, analytic solution atoms, and raw estimator difficulty in PDEZoo." loading="lazy"></a>
     <figcaption class="fine">2D benchmark composition: (a) geometry construction, (b) PDE families, (c) analytic solution building blocks, (d) difficulty of the raw 32-walk estimate.</figcaption>
   </figure>
+
+  <p class="section-cta"><a class="btn" href="https://huggingface.co/datasets/ethanhibiscus/PDEZoo/viewer?row=4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>Browse PDEZoo <small>Hugging Face</small></a></p>
 </section>
 
 <!-- ============ CITATION ============ -->
 <section id="citation" class="section citation">
-  <div class="section-label">Citation</div>
-  <h2>Cite MC²</h2>
+  <h2 class="section-label">Citation</h2>
   <div class="bib-box">
     <button id="copy-citation" type="button">Copy BibTeX</button>
-<pre id="bibtex">@misc{hsu2026mc2,
-  title = {MC2: Monte Carlo Correction for
-           Fast Elliptic PDE Solving},
-  author = {Hsu, Ethan and Ge, Ivan and Yam, Hong Meng},
-  year = {2026}
+<pre id="bibtex">@inproceedings{hsu2026mc2,
+  title     = {{MC}$^2$: {M}onte {C}arlo Correction for
+               Fast Elliptic {PDE} Solving},
+  author    = {Hsu, Ethan and Ge, Ivan and Yam, Hong Meng},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2026},
+  eprint    = {2605.09288},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
 }</pre>
     <span id="copy-status" class="sr-only" role="status"></span>
   </div>
-  <p class="fine">Preliminary citation; publication link forthcoming. Questions? <a href="mailto:contact@ethanhsu.net">Contact Ethan Hsu</a>.</p>
+  <p class="fine">Proceedings link coming soon. Questions? Contact Ethan Hsu: <a href="mailto:ethanhsu@stanford.edu">ethanhsu@stanford.edu</a>.</p>
 </section>
 
 </main>
