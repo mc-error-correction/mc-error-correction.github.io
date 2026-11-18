@@ -82,7 +82,8 @@ h1{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-.032em;line-he
 .kstat span{display:block;margin:8px auto 0;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
 
 /* ---------- Teaser ---------- */
-.teaser{position:relative;max-width:var(--col);margin:0 auto 52px;text-align:left}
+.teaser{position:relative;max-width:var(--col);margin:0 auto;text-align:left}
+.hero .keystats{margin-bottom:56px}
 .teaser a{display:block}
 .teaser img{mix-blend-mode:multiply}
 .teaser figcaption{margin:12px auto 0;max-width:var(--col);text-align:center;font-size:14px;line-height:1.55;color:var(--ink-2);text-wrap:balance}
@@ -190,7 +191,7 @@ footer span,footer>a:last-child{font-size:12.5px;color:var(--muted)}
   main{padding:0 16px}
   .hero{padding:44px 0 36px}
   .bib-box{padding-top:52px}
-  .teaser{margin-bottom:36px}
+  .hero .keystats{margin-bottom:36px}
   .resources{margin-bottom:40px}
   .abstract p{font-size:15px}
   .nav-paper{height:28px;padding:0 11px}

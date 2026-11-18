@@ -49,17 +49,17 @@
     <span class="btn disabled" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Code <small>Coming soon</small></span>
   </div>
 
-  <figure class="teaser">
-    <a href="assets/gyroid.png" target="_blank" rel="noopener" aria-label="Open full-resolution 3D comparison"><img src="assets/gyroid.png" width="2800" height="1800" alt="Interior and exterior views of a gyroid compare a noisy Walk-on-Spheres estimate with 32 walks per point, the smooth MC² result from 8 walks plus correction, and the analytic ground truth. All panels share a linear color scale." fetchpriority="high"></a>
-    <figcaption>MC² (middle) starts from 8 walks per point and finishes in 5.6 s, with <b>~550× lower</b> interior-slice error than Walk-on-Spheres with 32 walks (left, 14.2 s). <span>3D Helmholtz on a gyroid; one selected example, errors against the analytic solution.</span></figcaption>
-  </figure>
-
   <div class="keystats" aria-label="Key results">
     <div class="kstat"><strong>~218×</strong><span>faster than Walk-on-Spheres at matched accuracy</span></div>
     <div class="kstat"><strong>~170×</strong><span>faster than diffusion baselines while achieving higher accuracy</span></div>
     <div class="kstat"><strong>#1</strong><span>learned method on PDE families never seen in training</span></div>
     <div class="kstat"><strong>2M</strong><span>PDEs in PDEZoo, each with an analytic ground truth</span></div>
   </div>
+
+  <figure class="teaser">
+    <a href="assets/gyroid.png" target="_blank" rel="noopener" aria-label="Open full-resolution 3D comparison"><img src="assets/gyroid.png" width="2800" height="1800" alt="Interior and exterior views of a gyroid compare a noisy Walk-on-Spheres estimate with 32 walks per point, the smooth MC² result from 8 walks plus correction, and the analytic ground truth. All panels share a linear color scale." fetchpriority="high"></a>
+    <figcaption>MC² (middle) starts from 8 walks per point and finishes in 5.6 s, with <b>~550× lower</b> interior-slice error than Walk-on-Spheres with 32 walks (left, 14.2 s). <span>3D Helmholtz on a gyroid; one selected example, errors against the analytic solution.</span></figcaption>
+  </figure>
 </header>
 
 <!-- ============ ABSTRACT ============ -->
